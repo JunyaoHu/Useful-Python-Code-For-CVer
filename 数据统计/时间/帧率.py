@@ -13,7 +13,7 @@ for i in tqdm(range(10)):
     import random
     time.sleep(random.random())
 
-print(f"fps (s): {frame_num/(time.time()-start):.4f}")
+print(f"fps on {frame_num} frames (f/s): {frame_num/(time.time()-start):.4f}")
 
 """
 # 输入示例
