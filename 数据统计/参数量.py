@@ -4,13 +4,11 @@
 
 import torch.nn as nn
 
-def count_training_parameters(model):
+def count_parameters(model):
     res = sum(p.numel() for p in model.parameters() if p.requires_grad)
     print(f"count_training_parameters: {res}")
-
-def count_parameters(model):
     res = sum(p.numel() for p in model.parameters())
-    print(f"count_parameters: {res}")
+    print(f"count_all_parameters:      {res}")
 
 class Model(nn.Module):
     def __init__(self, num_inputs, num_hiddens, num_outputs):
@@ -30,12 +28,11 @@ if __name__ == '__main__':
 
     net = Model(num_hiddens=num_hiddens, num_outputs=num_outputs, num_inputs=num_inputs)
 
-    count_training_parameters(net)
     count_parameters(net)
 
     
 """
 # 样例输出
 count_training_parameters: 20602
-count_parameters: 20602
+count_all_parameters:      20602
 """
