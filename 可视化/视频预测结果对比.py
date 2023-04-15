@@ -6,10 +6,11 @@ import numpy as np
 import torch
 from torchvision.utils import make_grid
 
-def visualize(save_path, origin, result, epoch_num=0, cond_frame_num=10, skip_pic_num=1, save_pic_num=8, save_pic_row=True, save_gif=True, save_gif_grid=True):
+def visualize(save_path, origin, result, epoch_num=0, cond_frame_num=10, skip_pic_num=1, save_pic_num=8, grid_nrow=4, save_pic_row=True, save_gif=True, save_gif_grid=True):
     # 输入: origin [b t c h w] + result [b t c h w]
     
     # 数据判定
+    print("==", save_pic_num)
     assert origin.shape == result.shape, f"origin ({origin.shape}) result ({result.shape}) shape are not equal."
     assert cond_frame_num <= origin.shape[1], f"cond_frame_num ({cond_frame_num}) is too big for video length ({origin.shape[1]})."
     
@@ -111,7 +112,7 @@ def visualize(save_path, origin, result, epoch_num=0, cond_frame_num=10, skip_pi
 
         for t in range(len(videos_grids)):
             # make_grid need [b c h w]
-            final_grids.append(make_grid(videos_grids[t], nrow=4, padding=10, pad_value=1))
+            final_grids.append(make_grid(videos_grids[t], nrow=grid_nrow, padding=10, pad_value=1))
 
         final_grids = torch.stack(final_grids)
         final_grids = einops.rearrange(final_grids, "t c h w -> t h w c")
