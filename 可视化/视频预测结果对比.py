@@ -4,7 +4,7 @@ import mediapy as media
 import cv2
 import numpy as np
 import torch
-from torchvision.utils import make_grid 
+from torchvision.utils import make_grid
 
 def visualize(save_path, origin, result, epoch_num=0, cond_frame_num=10, skip_pic_num=1, save_pic_num=8, save_pic_row=True, save_gif=True, save_gif_grid=True):
     # 输入: origin [b t c h w] + result [b t c h w]
@@ -23,8 +23,12 @@ def visualize(save_path, origin, result, epoch_num=0, cond_frame_num=10, skip_pi
         save_pic_num = min (len(origin), save_pic_num)
         print(f"video batchsize({len(origin)}) is too small, save_num is set to {save_pic_num}")
     
-    origin = origin[:save_pic_num].cpu()
-    result = result[:save_pic_num].cpu()
+    index = [int(i) for i in torch.linspace(0, len(origin)-1, save_pic_num)]
+    
+    print(index)
+
+    origin = origin[index].cpu()
+    result = result[index].cpu()
 
     # 输出视频分解对比图
     if save_pic_row:
